@@ -1,0 +1,29 @@
+#CODIGO ATIVIDADE 01
+
+import pandas as pd
+import numpy as np 
+from matplotlib.pyplot import *
+
+#DATASET E FILTRO
+
+bd1 = pd.read_csv('historico-alg1_SIGA_ANONIMIZADO.csv')
+filtro_equivalencia = bd1[bd1['tipo'] == 'TURMA']
+
+#QUESTAO 1
+
+aprovados = filtro_equivalencia[filtro_equivalencia['status'] == 'Aprovado']
+
+tabela_aprovados = aprovados[['ano', 'nota']]
+media_aprovados = tabela_aprovados.groupby('ano').mean()
+media_final_aprovados = media_aprovados.mean()
+print("A media anual, e total dos aprovados sao,", media_aprovados, media_final_aprovados)
+
+#PLOT 1
+
+media_aprovados.plot()
+axhline(y=np.nanmean(media_final_aprovados), color='green', linestyle='-', linewidth=1.5)
+xlabel('Ano')
+ylabel ('Nota')
+title('Nota média dos aprovados, por ano')
+savefig('figuraum.png')
+show()
