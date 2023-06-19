@@ -27,3 +27,25 @@ ylabel ('Nota')
 title('Nota média dos aprovados, por ano')
 savefig('figuraum.png')
 show()
+
+np.nanmean(media_final_aprovados)
+
+#QUESTAO 2
+
+reprovados = filtro_equivalencia[(filtro_equivalencia["status"] == 'R-nota')]
+resultado_reprovados = reprovados[['ano', 'nota']]
+media_reprovados = resultado_reprovados.groupby('ano').mean()
+media_final_reprovados = media_reprovados.mean()
+print("A media anual, e total dos aprovados sao,", media_reprovados, media_final_reprovados)
+
+#PlOT 2
+
+media_reprovados.plot()
+axhline(y=np.nanmean(media_final_reprovados), color='green', linestyle='-', linewidth=1.5, label='Média total')
+xlabel('Anos')
+ylabel ('Notas')
+title('Nota média dos reprovados, por ano')
+savefig('figuradois.png')
+show()
+
+np.nanmean(media_final_reprovados)
