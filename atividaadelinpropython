@@ -49,3 +49,44 @@ savefig('figuradois.png')
 show()
 
 np.nanmean(media_final_reprovados)
+
+#QUESTAO 3
+
+reprovados = filtro_equivalencia[(filtro_equivalencia["status"] == 'R-nota')]
+frequencia_reprovados = reprovados[['ano', 'frequencia']]
+freq_media_reprovados = frequencia_reprovados.groupby('ano').mean()
+frequencia_final_reprovados = freq_media_reprovados.mean()
+print("A frequencia anual, e total dos reprovados sao,", media_reprovados, media_final_reprovados)
+
+#PLOT 3
+
+freq_media_reprovados.plot()
+axhline(y=np.nanmean(frequencia_final_reprovados), color='green', linestyle='-', linewidth=1.5, label='Média total')
+xlabel('Anos')
+ylabel ('Frequencia')
+title('Frequencia dos reprovados_nota por ano')
+savefig('figuratres.png')
+show()
+
+np.nanmean(frequencia_final_reprovados)
+
+#QUESTAO 4
+
+filtro_equivalencia = bd1[bd1['tipo'] == 'TURMA']
+evadidos_ptotal = filtro_equivalencia['situacaoDiscente'].value_counts(normalize = True)['Evasão'] * 100
+print (evadidos_ptotal)
+
+evadidos_panual = (filtro_equivalencia[filtro_equivalencia['situacaoDiscente'] == 'Evasão'].groupby('ano')['status'].count() / filtro_equivalencia.groupby('ano')['status'].count() * 100)
+print(evadidos_panual) 
+
+#PLOT 4 
+
+anos_analisados = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
+percentuais = [70.0, 25.0, 15.151515, 14.0, 19.101124, 24.175824, 15.702479, 17.708333, 12.318841, 2.479339]
+
+plot(anos_analisados, percentuais, linestyle='-')
+
+xlabel('Ano')
+ylabel('Evasão (%)')
+savefig('figuraquatro.png')
+show()
